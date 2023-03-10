@@ -5,13 +5,13 @@ Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-            apiKey: "AIzaSyCy4xXswSJ2opZgK8_Hmtm9qZ_I1WLyUt8",
-            authDomain: "sniffsocial.firebaseapp.com",
-            projectId: "sniffsocial",
-            storageBucket: "sniffsocial.appspot.com",
-            messagingSenderId: "768238167223",
-            appId: "1:768238167223:web:d2924386412f22e20e9932",
-            measurementId: "G-DWSYG7607T"));
+            apiKey: "AIzaSyAUReWtM9ehJU3mBfbAb23065Phnlig3tY",
+            authDomain: "theta-camera-378821.firebaseapp.com",
+            projectId: "theta-camera-378821",
+            storageBucket: "theta-camera-378821.appspot.com",
+            messagingSenderId: "508886444412",
+            appId: "1:508886444412:web:a8976a32822cdf74e5dcf9",
+            measurementId: "G-S9659ECQCY"));
   } else {
     await Firebase.initializeApp();
   }

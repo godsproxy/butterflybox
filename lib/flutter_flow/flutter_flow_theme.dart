@@ -39,14 +39,6 @@ abstract class FlutterFlowTheme {
   late Color primaryText;
   late Color secondaryText;
 
-  late Color primaryDark;
-  late Color background;
-  late Color grayIcon;
-  late Color gray200;
-  late Color dark600;
-  late Color primaryBtnText;
-  late Color lineColor;
-
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
   String get title2Family => typography.title2Family;
@@ -66,22 +58,14 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFF27415B);
-  late Color secondaryColor = const Color(0xFF0A2B42);
-  late Color tertiaryColor = const Color(0xFFA96D51);
-  late Color alternate = const Color(0xFFEBDBCE);
-  late Color primaryBackground = const Color(0xFFFDF9F7);
+  late Color primaryColor = const Color(0xFF928163);
+  late Color secondaryColor = const Color(0xFF14181B);
+  late Color tertiaryColor = const Color(0xFFDCC294);
+  late Color alternate = const Color(0xFFDBE2E7);
+  late Color primaryBackground = const Color(0xFFF1F4F8);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color primaryText = const Color(0xFF0E151B);
-  late Color secondaryText = const Color(0xFF8B9BA8);
-
-  late Color primaryDark = Color(0xFF1A1F24);
-  late Color background = Color(0xFFF1F4F8);
-  late Color grayIcon = Color(0xFF95A1AC);
-  late Color gray200 = Color(0xFFDBE2E7);
-  late Color dark600 = Color(0xFF262D34);
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFFE0E3E7);
+  late Color primaryText = const Color(0xFF14181B);
+  late Color secondaryText = const Color(0xFF57636C);
 }
 
 abstract class Typography {
@@ -106,51 +90,51 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get title1Family => 'Libre Caslon Display';
+  String get title1Family => 'Lexend';
   TextStyle get title1 => GoogleFonts.getFont(
-        'Libre Caslon Display',
+        'Lexend',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 34.0,
       );
-  String get title2Family => 'Outfit';
+  String get title2Family => 'Lexend';
   TextStyle get title2 => GoogleFonts.getFont(
-        'Outfit',
+        'Lexend',
         color: theme.primaryText,
-        fontWeight: FontWeight.w300,
-        fontSize: 40.0,
+        fontWeight: FontWeight.w600,
+        fontSize: 28.0,
       );
-  String get title3Family => 'Libre Caslon Display';
+  String get title3Family => 'Lexend';
   TextStyle get title3 => GoogleFonts.getFont(
-        'Libre Caslon Display',
+        'Lexend',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 20.0,
       );
-  String get subtitle1Family => 'Outfit';
+  String get subtitle1Family => 'Lexend';
   TextStyle get subtitle1 => GoogleFonts.getFont(
-        'Outfit',
+        'Lexend',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 18.0,
       );
-  String get subtitle2Family => 'Outfit';
+  String get subtitle2Family => 'DM Sans';
   TextStyle get subtitle2 => GoogleFonts.getFont(
-        'Outfit',
+        'DM Sans',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w500,
         fontSize: 16.0,
       );
-  String get bodyText1Family => 'Outfit';
+  String get bodyText1Family => 'DM Sans';
   TextStyle get bodyText1 => GoogleFonts.getFont(
-        'Outfit',
+        'DM Sans',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
-  String get bodyText2Family => 'Outfit';
+  String get bodyText2Family => 'DM Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
-        'Outfit',
+        'DM Sans',
         color: theme.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
@@ -158,22 +142,14 @@ class ThemeTypography extends Typography {
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFF27415B);
-  late Color secondaryColor = const Color(0xFF0A2B42);
-  late Color tertiaryColor = const Color(0xFFA96D51);
-  late Color alternate = const Color(0xFF232F3C);
-  late Color primaryBackground = const Color(0xFF111D28);
-  late Color secondaryBackground = const Color(0xFF0E151B);
+  late Color primaryColor = const Color(0xFF928163);
+  late Color secondaryColor = const Color(0xFF14181B);
+  late Color tertiaryColor = const Color(0xFFDCC294);
+  late Color alternate = const Color(0xFF262D34);
+  late Color primaryBackground = const Color(0xFF1A1F24);
+  late Color secondaryBackground = const Color(0xFF0F1316);
   late Color primaryText = const Color(0xFFFFFFFF);
-  late Color secondaryText = const Color(0xFFACB9C4);
-
-  late Color primaryDark = Color(0xFF1A1F24);
-  late Color background = Color(0xFFF1F4F8);
-  late Color grayIcon = Color(0xFF95A1AC);
-  late Color gray200 = Color(0xFFDBE2E7);
-  late Color dark600 = Color(0xFF262D34);
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFF22282F);
+  late Color secondaryText = const Color(0xFF95A1AC);
 }
 
 extension TextStyleHelper on TextStyle {

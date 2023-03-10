@@ -59,7 +59,10 @@ class _DeleteStoryWidgetState extends State<DeleteStoryWidget> {
           children: [
             FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('DELETE_STORY_DELETE_STORY_BTN_ON_TAP');
+                logFirebaseEvent('Button_backend_call');
                 await widget.storyDetails!.reference.delete();
+                logFirebaseEvent('Button_navigate_to');
 
                 context.pushNamed(
                   'homePage',
@@ -80,7 +83,7 @@ class _DeleteStoryWidgetState extends State<DeleteStoryWidget> {
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: Color(0xFFFF5963),
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Outfit',
+                      fontFamily: 'DM Sans',
                       color: Colors.white,
                     ),
                 borderSide: BorderSide(
@@ -94,6 +97,8 @@ class _DeleteStoryWidgetState extends State<DeleteStoryWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
+                  logFirebaseEvent('DELETE_STORY_COMP_CANCEL_BTN_ON_TAP');
+                  logFirebaseEvent('Button_navigate_back');
                   context.pop();
                 },
                 text: 'Cancel',

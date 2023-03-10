@@ -29,6 +29,8 @@ class _CreateDogProfileWidgetState extends State<CreateDogProfileWidget> {
     super.initState();
     _model = createModel(context, () => CreateDogProfileModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'createDogProfile'});
     _model.dogNameController ??= TextEditingController();
     _model.dogBreedController ??= TextEditingController();
     _model.dogAgeController ??= TextEditingController();
@@ -44,448 +46,465 @@ class _CreateDogProfileWidgetState extends State<CreateDogProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Dog Profile',
-          style: FlutterFlowTheme.of(context).title2,
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 24.0, 0.0),
-            child: Text(
-              '1/2',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Outfit',
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Title(
+        title: 'createDogProfile',
+        color: FlutterFlowTheme.of(context).primaryColor,
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Dog Profile',
+              style: FlutterFlowTheme.of(context).title2,
             ),
+            actions: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 24.0, 0.0),
+                child: Text(
+                  '1/2',
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'DM Sans',
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+            ],
+            centerTitle: false,
+            elevation: 0.0,
           ),
-        ],
-        centerTitle: false,
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Fill out your dog profiles below! And then get to sharing your pups!',
-                            style: FlutterFlowTheme.of(context).bodyText2,
-                          ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Fill out your dog profiles below! And then get to sharing your pups!',
+                                style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 200.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).gray200,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: Image.asset(
-                          'assets/images/dog_emptyChoosePhoto@2x.png',
-                        ).image,
                       ),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        final selectedMedia =
-                            await selectMediaWithSourceBottomSheet(
-                          context: context,
-                          allowPhoto: true,
-                        );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
-                          setState(() => _model.isMediaUploading = true);
-                          var selectedUploadedFiles = <FFUploadedFile>[];
-                          var downloadUrls = <String>[];
-                          try {
-                            showUploadMessage(
-                              context,
-                              'Uploading file...',
-                              showLoading: true,
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFDBE2E7),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Image.asset(
+                              'assets/images/dog_emptyChoosePhoto@2x.png',
+                            ).image,
+                          ),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'CREATE_DOG_PROFILE_Image_966nawev_ON_TAP');
+                            logFirebaseEvent('Image_upload_media_to_firebase');
+                            final selectedMedia =
+                                await selectMediaWithSourceBottomSheet(
+                              context: context,
+                              allowPhoto: true,
                             );
-                            selectedUploadedFiles = selectedMedia
-                                .map((m) => FFUploadedFile(
-                                      name: m.storagePath.split('/').last,
-                                      bytes: m.bytes,
-                                      height: m.dimensions?.height,
-                                      width: m.dimensions?.width,
-                                    ))
-                                .toList();
+                            if (selectedMedia != null &&
+                                selectedMedia.every((m) => validateFileFormat(
+                                    m.storagePath, context))) {
+                              setState(() => _model.isMediaUploading = true);
+                              var selectedUploadedFiles = <FFUploadedFile>[];
+                              var downloadUrls = <String>[];
+                              try {
+                                showUploadMessage(
+                                  context,
+                                  'Uploading file...',
+                                  showLoading: true,
+                                );
+                                selectedUploadedFiles = selectedMedia
+                                    .map((m) => FFUploadedFile(
+                                          name: m.storagePath.split('/').last,
+                                          bytes: m.bytes,
+                                          height: m.dimensions?.height,
+                                          width: m.dimensions?.width,
+                                        ))
+                                    .toList();
 
-                            downloadUrls = (await Future.wait(
-                              selectedMedia.map(
-                                (m) async =>
-                                    await uploadData(m.storagePath, m.bytes),
-                              ),
-                            ))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                          } finally {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            _model.isMediaUploading = false;
-                          }
-                          if (selectedUploadedFiles.length ==
-                                  selectedMedia.length &&
-                              downloadUrls.length == selectedMedia.length) {
-                            setState(() {
-                              _model.uploadedLocalFile =
-                                  selectedUploadedFiles.first;
-                              _model.uploadedFileUrl = downloadUrls.first;
-                            });
-                            showUploadMessage(context, 'Success!');
-                          } else {
-                            setState(() {});
-                            showUploadMessage(
-                                context, 'Failed to upload media');
-                            return;
-                          }
-                        }
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16.0),
-                        child: Image.network(
-                          _model.uploadedFileUrl,
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: 200.0,
-                          fit: BoxFit.cover,
+                                downloadUrls = (await Future.wait(
+                                  selectedMedia.map(
+                                    (m) async => await uploadData(
+                                        m.storagePath, m.bytes),
+                                  ),
+                                ))
+                                    .where((u) => u != null)
+                                    .map((u) => u!)
+                                    .toList();
+                              } finally {
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                _model.isMediaUploading = false;
+                              }
+                              if (selectedUploadedFiles.length ==
+                                      selectedMedia.length &&
+                                  downloadUrls.length == selectedMedia.length) {
+                                setState(() {
+                                  _model.uploadedLocalFile =
+                                      selectedUploadedFiles.first;
+                                  _model.uploadedFileUrl = downloadUrls.first;
+                                });
+                                showUploadMessage(context, 'Success!');
+                              } else {
+                                setState(() {});
+                                showUploadMessage(
+                                    context, 'Failed to upload media');
+                                return;
+                              }
+                            }
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16.0),
+                            child: Image.network(
+                              _model.uploadedFileUrl,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 16.0, 24.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: TextFormField(
+                                  controller: _model.dogNameController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Dog Name',
+                                    labelStyle:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).title2,
+                                  validator: _model.dogNameControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 4.0, 24.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: TextFormField(
+                                  controller: _model.dogBreedController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Dog Breed',
+                                    labelStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).title3,
+                                  validator: _model.dogBreedControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 4.0, 24.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: TextFormField(
+                                  controller: _model.dogAgeController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Dog Age',
+                                    labelStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).title3,
+                                  keyboardType: TextInputType.number,
+                                  validator: _model.dogAgeControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 16.0, 24.0, 0.0),
-                    child: Row(
+                        EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
+                    child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 0.0),
-                            child: TextFormField(
-                              controller: _model.dogNameController,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Dog Name',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).subtitle2,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'You can add multiple pups in your profile.',
+                                style: FlutterFlowTheme.of(context).bodyText2,
                               ),
-                              style: FlutterFlowTheme.of(context).title2,
-                              validator: _model.dogNameControllerValidator
-                                  .asValidator(context),
-                            ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 24.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 0.0),
-                            child: TextFormField(
-                              controller: _model.dogBreedController,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Dog Breed',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: UnderlineInputBorder(
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 20.0, 40.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'CREATE_DOG_PROFILE_PAGE_SKIP_BTN_ON_TAP');
+                                  logFirebaseEvent('Button_navigate_to');
+
+                                  context.goNamed('createYourProfile');
+                                },
+                                text: 'Skip',
+                                options: FFButtonOptions(
+                                  width: 100.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: Color(0xFFF1F4F8),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'DM Sans',
+                                        color: Color(0xFF1A1F24),
+                                      ),
+                                  elevation: 0.0,
                                   borderSide: BorderSide(
-                                    color: Color(0x00000000),
+                                    color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(40.0),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).title3,
-                              validator: _model.dogBreedControllerValidator
-                                  .asValidator(context),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 24.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 0.0),
-                            child: TextFormField(
-                              controller: _model.dogAgeController,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Dog Age',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: UnderlineInputBorder(
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 40.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'CREATE_DOG_PROFILE_SAVE_&_CONTINUE_BTN_O');
+                                  logFirebaseEvent('Button_backend_call');
+
+                                  final dogsCreateData = createDogsRecordData(
+                                    userAssociation: currentUserReference,
+                                    dogPhoto: _model.uploadedFileUrl,
+                                    dogName: _model.dogNameController.text,
+                                    dogType: _model.dogBreedController.text,
+                                    dogAge: _model.dogAgeController.text,
+                                  );
+                                  await DogsRecord.collection
+                                      .doc()
+                                      .set(dogsCreateData);
+                                  logFirebaseEvent('Button_navigate_to');
+
+                                  context.goNamed('createYourProfile');
+                                },
+                                text: 'Save & Continue',
+                                options: FFButtonOptions(
+                                  width: 180.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'DM Sans',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
-                                    color: Color(0x00000000),
+                                    color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(40.0),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).title3,
-                              keyboardType: TextInputType.number,
-                              validator: _model.dogAgeControllerValidator
-                                  .asValidator(context),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'You can add multiple pups in your profile.',
-                            style: FlutterFlowTheme.of(context).bodyText2,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 20.0, 40.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.goNamed('createYourProfile');
-                            },
-                            text: 'Skip',
-                            options: FFButtonOptions(
-                              width: 100.0,
-                              height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).background,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryDark,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 40.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              final dogsCreateData = createDogsRecordData(
-                                userAssociation: currentUserReference,
-                                dogPhoto: _model.uploadedFileUrl,
-                                dogName: _model.dogNameController.text,
-                                dogType: _model.dogBreedController.text,
-                                dogAge: _model.dogAgeController.text,
-                              );
-                              await DogsRecord.collection
-                                  .doc()
-                                  .set(dogsCreateData);
-
-                              context.goNamed('createYourProfile');
-                            },
-                            text: 'Save & Continue',
-                            options: FFButtonOptions(
-                              width: 180.0,
-                              height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color: Colors.white,
-                                  ),
-                              elevation: 2.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

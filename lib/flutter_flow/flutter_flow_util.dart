@@ -25,6 +25,7 @@ export 'package:intl/intl.dart';
 export 'package:cloud_firestore/cloud_firestore.dart'
     show DocumentReference, FirebaseFirestore;
 export 'package:page_transition/page_transition.dart';
+export '../backend/firebase_analytics/analytics.dart';
 export 'nav/nav.dart';
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
@@ -134,6 +135,13 @@ String formatNumber(
 }
 
 DateTime get getCurrentTimestamp => DateTime.now();
+DateTime dateTimeFromSecondsSinceEpoch(int seconds) {
+  return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+}
+
+extension DateTimeConversionExtension on DateTime {
+  int get secondsSinceEpoch => (millisecondsSinceEpoch / 1000).round();
+}
 
 extension DateTimeComparisonOperators on DateTime {
   bool operator <(DateTime other) => isBefore(other);

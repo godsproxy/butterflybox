@@ -7,9 +7,9 @@ import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
 
 import '../../auth/firebase_user_provider.dart';
-import '../../backend/push_notifications/push_notifications_handler.dart'
-    show PushNotificationsHandler;
 
+import '../../backend/firebase_dynamic_links/firebase_dynamic_links.dart'
+    show DynamicLinksHandler;
 import '../../index.dart';
 import '../../main.dart';
 import '../lat_lng.dart';
@@ -18,6 +18,8 @@ import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
+export '../../backend/firebase_dynamic_links/firebase_dynamic_links.dart'
+    show generateCurrentPageLink;
 
 const kTransitionInfoKey = '__transition_info__';
 
@@ -72,6 +74,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
           appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
+      navigatorBuilder: (_, __, child) => DynamicLinksHandler(child: child),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -87,7 +90,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'createAccount',
               path: 'createAccount',
-              requireAuth: true,
               builder: (context, params) => CreateAccountWidget(),
             ),
             FFRoute(
@@ -243,8 +245,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => CreateGroupChatWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
-        ).toRoute(appStateNotifier),
-      ],
+        ),
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
     );
 
@@ -290,6 +292,16 @@ extension NavigationExtensions on BuildContext {
               queryParams: queryParams,
               extra: extra,
             );
+
+  void safePop() {
+    // If there is only one route on the stack, navigate to the initial
+    // page instead of popping.
+    if (GoRouter.of(this).routerDelegate.matches.length <= 1) {
+      go('/');
+    } else {
+      pop();
+    }
+  }
 }
 
 extension GoRouterExtensions on GoRouter {
@@ -415,16 +427,12 @@ class FFRoute {
           final child = appStateNotifier.loading
               ? Container(
                   color: Colors.transparent,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/Sniff_0.0_Splash@2x.png',
-                      width: MediaQuery.of(context).size.width * 1.0,
-                      height: MediaQuery.of(context).size.height * 1.0,
-                      fit: BoxFit.cover,
-                    ),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
                   ),
                 )
-              : PushNotificationsHandler(child: page);
+              : page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

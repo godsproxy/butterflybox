@@ -59,6 +59,9 @@ class _CreateModalWidgetState extends State<CreateModalWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
             child: InkWell(
               onTap: () async {
+                logFirebaseEvent('CREATE_MODAL_Container_pin4lk6r_ON_TAP');
+                logFirebaseEvent('Container_navigate_to');
+
                 context.pushNamed(
                   'createStory',
                   extra: <String, dynamic>{
@@ -123,7 +126,7 @@ class _CreateModalWidgetState extends State<CreateModalWidget> {
               width: MediaQuery.of(context).size.width * 0.9,
               height: 0.0,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).dark600,
+                color: Color(0xFF262D34),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 3.0,
@@ -155,7 +158,7 @@ class _CreateModalWidgetState extends State<CreateModalWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .title3
                                     .override(
-                                      fontFamily: 'Libre Caslon Display',
+                                      fontFamily: 'Lexend',
                                       color: FlutterFlowTheme.of(context)
                                           .tertiaryColor,
                                     ),
@@ -182,6 +185,9 @@ class _CreateModalWidgetState extends State<CreateModalWidget> {
           ),
           InkWell(
             onTap: () async {
+              logFirebaseEvent('CREATE_MODAL_Container_adpia5ej_ON_TAP');
+              logFirebaseEvent('Container_navigate_to');
+
               context.pushNamed(
                 'createPost',
                 extra: <String, dynamic>{

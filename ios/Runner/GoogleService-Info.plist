@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>768238167223-43fd19f4li6v8uhj8b8rlfd78r3fvoqm.apps.googleusercontent.com</string>
+	<string>508886444412-hpm8bct6tqm57e3greq998ovm0nqg2vv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.768238167223-43fd19f4li6v8uhj8b8rlfd78r3fvoqm</string>
+	<string>com.googleusercontent.apps.508886444412-hpm8bct6tqm57e3greq998ovm0nqg2vv</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>768238167223-43akplm12n0876h3e9tdmb853nkuim4f.apps.googleusercontent.com</string>
+	<string>508886444412-6ec0spbue4igllsglten72ed83kblq57.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDQvwm2wX4hl0rRYp_4-bvoXJCJFgWKUOs</string>
+	<string>AIzaSyDtZ5LpqJBeT5AyycQUDRPwxAxigfhFYKY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>768238167223</string>
+	<string>508886444412</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.flutterflow.sniffsocial</string>
+	<string>ca.channel42.life</string>
 	<key>PROJECT_ID</key>
-	<string>sniffsocial</string>
+	<string>theta-camera-378821</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sniffsocial.appspot.com</string>
+	<string>theta-camera-378821.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:768238167223:ios:a6c6b89fd98702450e9932</string>
+	<string>1:508886444412:ios:2101a2c801d526ede5dcf9</string>
 </dict>
 </plist>

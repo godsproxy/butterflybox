@@ -259,7 +259,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                                   .bodyText1
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Outfit',
+                                                                        'DM Sans',
                                                                     fontSize:
                                                                         12.0,
                                                                   ),
@@ -275,7 +275,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                                 .bodyText2
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Outfit',
+                                                                      'DM Sans',
                                                                   fontSize:
                                                                       12.0,
                                                                 ),
@@ -382,6 +382,9 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 4.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            logFirebaseEvent('COMMENTS_COMP_POST_BTN_ON_TAP');
+                            logFirebaseEvent('Button_backend_call');
+
                             final storyCommentsCreateData =
                                 createStoryCommentsRecordData(
                               storyAssociation:
@@ -393,6 +396,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                             await StoryCommentsRecord.collection
                                 .doc()
                                 .set(storyCommentsCreateData);
+                            logFirebaseEvent('Button_backend_call');
 
                             final userStoriesUpdateData = {
                               'numComments': FieldValue.increment(1),
@@ -413,7 +417,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                             textStyle: FlutterFlowTheme.of(context)
                                 .subtitle2
                                 .override(
-                                  fontFamily: 'Outfit',
+                                  fontFamily: 'DM Sans',
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                 ),
